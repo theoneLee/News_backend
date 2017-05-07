@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
+    <!--这里用来加载后端中间层和数据层的bean，相当于java配置中的RootConfig-->
 
     <bean id="objectMapper" class="util.CustomObjectMapper" init-method="init">
         <property name="camelCaseToLowerCaseWithUnderscores" value="true"/>
