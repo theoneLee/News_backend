@@ -3,10 +3,12 @@ package controller;
 import bean.Response;
 import bean.user.CommonUser;
 import bean.user.LoginedResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import security.TokenManager;
 import service.UserService;
 
 /**
@@ -40,7 +42,6 @@ public class UserController {//todo：注册，登录，注销，修改密码；
             //新建一个Response并注入相关登录失败的相关信息
             return new Response().failure("login_failure");
         }
-        return new Response().failure("unknown_error");
     }
 
 //    @RequestMapping(value = "/logout",method = RequestMethod.GET)

@@ -4,6 +4,7 @@ import bean.News;
 import bean.Response;
 import bean.TempNews;
 import org.springframework.web.bind.annotation.*;
+import security.IgnoreSecurity;
 
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class NewsController {//todo：crud新闻，返回Response对象，前端根据返回的json进行渲染
 
     @RequestMapping(method = RequestMethod.POST)
+    //@IgnoreSecurity加上这个注解就会让该方法跳过检查
     public Response createNews(@RequestBody News news){
         boolean result=newsService.createNews(news);
         if (result){

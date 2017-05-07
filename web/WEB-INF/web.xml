@@ -22,8 +22,20 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+
+    <!--配置webContextFilter-->
+    <filter>
+        <filter-name>webContextFilter</filter-name>
+        <filter-class>security.web.WebContextFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>webContextFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
     <!--todo 需要在这里配置允许跨域的域名-->
-    <!--这里是cors的相关配置，allowOrigin的value可以有多个（用逗号分隔即可）-->
+    <!--这里是cors的相关配置，allowOrigin的value可以有多个（用逗号分隔即可）,且allowHeaders中可以配置X-Token用于安全认证-->
     <filter>
         <filter-name>corsFilter</filter-name>
         <filter-class>cors.CorsFilter</filter-class>
@@ -41,7 +53,7 @@
         </init-param>
         <init-param>
             <param-name>allowHeaders</param-name>
-            <param-value>Content-Type</param-value>
+            <param-value>Content-Type,X-Token</param-value>
         </init-param>
     </filter>
     <filter-mapping>

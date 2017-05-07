@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * 当发生400等错误时，该切片拦截并返回一个Response
  * Created by Lee on 2017/5/7 0007.
  */
-@ControllerAdvice
-@ResponseBody
+@ControllerAdvice//该注解可声明全局的异常处理切面类，用它来统一处理所有的异常行为
+@ResponseBody//表示返回值可序列化为 JSON 字符串
 public class ExceptionAdvice {
     /**
      * 400 - Bad Request
