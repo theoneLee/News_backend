@@ -37,6 +37,7 @@
     <bean id="securityAspect" class="security.SecurityAspect">
         <property name="tokenManager" ref="tokenManager"/>
         <property name="tokenName" value="X-Token"/>
+        <property name="permissionName" value="Permission"/>
     </bean>
         <!--拦截注解为RequestMapping的行为（即拦截 Controller 类的方法）-->
     <aop:config>

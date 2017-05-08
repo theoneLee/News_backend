@@ -15,9 +15,11 @@ import java.lang.reflect.Method;
 public class SecurityAspect {
 
     private static final String DEFAULT_TOKEN_NAME = "X-Token";
+    private static final String DEFAULT_PERMISSION_NAME = "X-Permission";
 
     private TokenManager tokenManager;
     private String tokenName;
+    private String permissionName;
 
     public void setTokenManager(TokenManager tokenManager) {
         this.tokenManager = tokenManager;
@@ -28,6 +30,13 @@ public class SecurityAspect {
             tokenName = DEFAULT_TOKEN_NAME;
         }
         this.tokenName = tokenName;
+    }
+
+    public void setPermissionName(String permissionName){
+        if (StringUtil.isEmpty(permissionName)){
+            this.permissionName=DEFAULT_PERMISSION_NAME;
+        }
+        this.permissionName=permissionName;
     }
 
     public Object execute(ProceedingJoinPoint pjp) throws Throwable {
@@ -45,6 +54,16 @@ public class SecurityAspect {
             String message = String.format("token [%s] is invalid", token);
             throw new TokenException(message);
         }
+
+        String permission = WebContext.getRequest().getHeader(permissionName);
+        // 检查 permission 有效性
+        if (StringUtil.isNotEmpty(permission)){//对于header中包含X-Permission的就进行permission的验证，因为普通用户在登录成功后返回的data里面是不包含permission字段的
+            if (!tokenManager.checkPermission(permission)) {
+                String message = String.format("permission [%s] is invalid", permission);
+                throw new TokenException(message);
+            }
+        }
+
         // 调用目标方法
         return pjp.proceed();
     }

@@ -41,7 +41,7 @@
         <filter-class>cors.CorsFilter</filter-class>
         <init-param>
             <param-name>allowOrigin</param-name>
-            <param-value>http://web.xxx.com</param-value>
+            <param-value>*</param-value>
         </init-param>
         <init-param>
             <param-name>allowMethods</param-name>
@@ -53,7 +53,7 @@
         </init-param>
         <init-param>
             <param-name>allowHeaders</param-name>
-            <param-value>Content-Type,X-Token</param-value>
+            <param-value>Content-Type,X-Token,X-Permission</param-value>
         </init-param>
     </filter>
     <filter-mapping>

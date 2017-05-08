@@ -7,4 +7,7 @@ public interface TokenManager {
     String createToken(String username);
 
     boolean checkToken(String token);
+
+    boolean checkPermission(String permission);
+    public String getUserName(String token);
 }

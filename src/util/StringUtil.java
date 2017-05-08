@@ -6,8 +6,6 @@ import org.apache.commons.lang3.math.NumberUtils;
 /**
  * 字符串工具类
  *
- * @author huangyong
- * @since 1.0.0
  */
 public final class StringUtil {
 
