@@ -43,4 +43,15 @@ public class DefaultTokenManager implements TokenManager {
     public String getUserName(String token){
         return tokenMap.get(token);
     }
+
+    @Override
+    public boolean removeToken(String token) {
+        if (tokenMap.containsKey(token)){
+            tokenMap.remove(token);
+            return true;
+        }
+        return false;
+    }
+
+
 }

@@ -1,11 +1,11 @@
 package dao;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by Lee on 2017/5/8 0008.
  */
-@Component
+@Repository
 public class UserDao {
 
     /**

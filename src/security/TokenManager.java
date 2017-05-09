@@ -9,5 +9,7 @@ public interface TokenManager {
     boolean checkToken(String token);
 
     boolean checkPermission(String permission);
-    public String getUserName(String token);
+    String getUserName(String token);
+
+    boolean removeToken(String token);
 }

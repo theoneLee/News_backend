@@ -1,5 +1,6 @@
 package controller;
 
+import bean.Pwd;
 import bean.Response;
 import bean.user.CommonUser;
 import bean.user.LoginedResult;
@@ -19,7 +20,7 @@ import service.UserService;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController {//todo：注册，登录，注销，修改密码；返回Response对象，前端根据返回的json进行渲染
+public class UserController {//注册，登录，注销，修改密码；返回Response对象，前端根据返回的json进行渲染
     private static final String DEFAULT_TOKEN_NAME = "X-Token";
 
     @Autowired
@@ -57,23 +58,47 @@ public class UserController {//todo：注册，登录，注销，修改密码；
         }
     }
 
-//    @RequestMapping(value = "/logout",method = RequestMethod.GET)
-//    public Response logout(){
-//        //todo:https://my.oschina.net/huangyong/blog/521891 4.6里面有解决方案（登入登出的用户安全有效性）
-//    }
-//
-//    @RequestMapping(value = "/updatePassword",method = RequestMethod.POST)
-//    public Response updatePassword(@RequestBody CommonUser user){
-//        String truePWD=userDAO.getPassword(user);
-//        String requestPWD=user.getPassword();
-//        if (!requestPWD.trim().equals("")&&requestPWD.equals(truePWD)){
-//            //todo:新建一个Response并注入相关修改密码成功的相关信息
-//
-//        }else {
-//            //todo:新建一个Response并注入相关修改密码失败的相关信息
-//        }
-//        return null;
-//    }
+    @RequestMapping(value = "/signin" ,method = RequestMethod.POST)
+    @IgnoreSecurity
+    public Response signin(@RequestBody CommonUser user){
+        boolean res=userService.signIn(user);
+        if (res){
+            return new Response().success();
+        }
+        return new Response().failure("signin_failure");
+    }
+    /**
+     * 在header拿到该token，然后移除该token
+     * @return
+     */
+    @RequestMapping(value = "/logout",method = RequestMethod.POST)
+    public Response logout(){
+        String token=WebContext.getRequest().getHeader(DEFAULT_TOKEN_NAME);
+        boolean result=tokenManager.removeToken(token);
+        if (result){
+            return new Response().success();
+        }else {
+            return new Response().failure("logout_failure");
+        }
+    }
+
+    /**
+     *
+     * @param pwd 包含username，oldPwd，newPwd，checkPwd字段 且请求时要cookie保存的token放入header中
+     * @return
+     */
+    @RequestMapping(value = "/updatePassword",method = RequestMethod.POST)//一般来说真正意义上的RESTful是不允许路径存在动词的，然后CRUD对应post，get，put，delete
+    public Response updatePassword(@RequestBody Pwd pwd){
+        String username=pwd.getUsername();
+        String oldPWD=pwd.getOldPwd();
+        String newPwd=pwd.getNewPwd();
+        String checkPwd=pwd.getCheckPwd();
+        boolean res=userService.updatePassword(username,oldPWD,newPwd,checkPwd);
+        if (res){
+            return new Response().success();
+        }
+        return new Response().failure("updatePassword_failure");
+    }
     @RequestMapping(value = "/detail" ,method = RequestMethod.GET)
     public Response getUserDetail(){
         String token=WebContext.getRequest().getHeader(DEFAULT_TOKEN_NAME);
