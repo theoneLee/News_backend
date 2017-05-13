@@ -46,5 +46,10 @@
         </aop:aspect>
     </aop:config>
 
+    <!--上传文件-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+    </bean>
+
 
 </beans>
