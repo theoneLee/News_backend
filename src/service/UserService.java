@@ -57,4 +57,12 @@ public class UserService {
         boolean res=userDao.createUser(user);
         return res;
     }
+
+    public boolean createManager(CommonUser user) {
+        if (userDao.getUserByName(user.getUsername())!=null){
+            return false;//若已存在该username，则不允许注册
+        }
+        boolean res=userDao.createNewsManager(user);
+        return res;
+    }
 }

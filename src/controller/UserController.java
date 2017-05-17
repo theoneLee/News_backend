@@ -79,6 +79,15 @@ public class UserController {//注册，登录，注销，修改密码；返回R
         }
         return new Response().failure("signin_failure");
     }
+
+    @RequestMapping(value = "/createNewsManager",method = RequestMethod.POST)
+    public Response createNewsManager(@RequestBody CommonUser user){//todo 这时候要检查的不是传递过来的user的token，而是创建NewsManager的admin的token（从header中）
+        boolean res=userService.createManager(user);
+        if (res){
+            return new Response().success();
+        }
+        return new Response().failure("createManager_failure");
+    }
     /**
      * 在header拿到该token，然后移除该token
      * @return
