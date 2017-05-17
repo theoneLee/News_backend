@@ -1,5 +1,6 @@
 package bean;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,8 @@ public class News {
     private String title;
     private Date date;
     private String newsManagerName;//使用富文本时，是利用上传图片的api，然后后端返回一个图片链接，前端拿到这个链接，直接嵌入文本的，而上传文本应该直接就是string化的html内容
+
+    private List<Comment> commentList=new ArrayList<>();
 
 
 
@@ -65,11 +68,15 @@ public class News {
         this.newsManagerName = newsManagerName;
     }
 
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
 
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
+    }
 
-
-
-//    public class Content {
+    //    public class Content {
 //        private String newsContent;
 //        private List<String> paths;//将图片上传到临时文件夹，然后返回一个string给这里使用
 //

@@ -1,35 +1,99 @@
 package dao;
 
+import bean.user.CommonUser;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by Lee on 2017/5/8 0008.
  */
 @Repository
-public class UserDao {
+public class UserDao {//todo 要保证username是唯一的
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     /**
-     * 暂时让username和password为lee的用户可以登录
+     *
      * @param username
      * @param password
      * @return
      */
     public boolean login(String username, String password) {
-        if (username.equals(password)){
+        String truePassword=getPasswordByName(username);
+        if (truePassword.equals(password)){
             return true;
         }
         return false;
     }
 
+    public String getPasswordByName(String username) {
+        Session s= sessionFactory.getCurrentSession();
+        Transaction tx=s.beginTransaction();
+        Query query=s.createQuery("select c.password from CommonUser c where c.username=?");
+        query.setString(0,username);
+        String password= (String) query.uniqueResult();
+        tx.commit();
+        return password;
+    }
+
     /**
-     * //todo 如果是普通权限就设置为null，如果有权限就设置为NEWS_ADMIN，NEWS_MANAGER(即普通用户不会返回一个)
+     *
      * @param username
-     * @return
+     * @return 普通用户会放回null或者“”
      */
     public String getPermission(String username) {
-        if (username.equals("lee")){
-            return "NEWS_ADMIN";
-        }
-        return null;
+        Session session=sessionFactory.getCurrentSession();
+        Transaction tx=session.beginTransaction();
+        Query query=session.createQuery("select c.permission from CommonUser c where c.username=?");
+        query.setString(0,username);
+        String permission= (String) query.uniqueResult();
+        tx.commit();
+        return permission;
+    }
+
+    public CommonUser getUserByName(String userName) {
+        Session session=sessionFactory.getCurrentSession();
+        Transaction tx=session.beginTransaction();
+        Query query=session.createQuery("from CommonUser where username=?");
+        query.setString(0,userName);
+        CommonUser user= (CommonUser) query.uniqueResult();
+        tx.commit();
+        return user;
+
+    }
+
+    public boolean createUser(CommonUser user) {
+        Session session=sessionFactory.getCurrentSession();
+        Transaction tx=session.beginTransaction();
+        user.setPermission(null);
+        session.save(user);
+        tx.commit();
+        return true;
+    }
+
+    public boolean createNewsManager(CommonUser user){
+        Session session=sessionFactory.getCurrentSession();
+        Transaction tx=session.beginTransaction();
+        user.setPermission("NEWS_MANAGER");
+        session.save(user);
+        tx.commit();
+        return true;
+    }
+
+    public boolean updatePassword(String username, String newPwd) {
+        Session session=sessionFactory.getCurrentSession();
+        Transaction tx=session.beginTransaction();
+        CommonUser user=getUserByName(username);
+        user.setPassword(newPwd);
+        session.update(user);
+        tx.commit();
+        return true;
     }
 }

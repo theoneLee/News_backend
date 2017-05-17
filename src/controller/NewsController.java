@@ -98,7 +98,7 @@ public class NewsController {//todo：crud新闻以及对新闻的评论（根�
     public Response commentNews(@PathVariable("id")String id, @RequestBody Comment comment){
         String token=WebContext.getRequest().getHeader(DEFAULT_TOKEN_NAME);
         String username=tokenManager.getUserName(token);
-        newsService.comment(id,comment,username);//todo comment和news的关系，以及news的字段是什么（问题：在图文并茂的文章中，前端怎么知道那个位置该插入图片那个位置是文字，前端怎么接受后台发来的图片？）
+        newsService.comment(id,comment,username);//todo comment和news的关系
     }
 
 }

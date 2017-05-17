@@ -14,6 +14,9 @@ import security.TokenManager;
 import security.web.WebContext;
 import service.UserService;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  *
  * Created by Lee on 2017/5/3 0003.
@@ -22,6 +25,7 @@ import service.UserService;
 @RequestMapping("/user")
 public class UserController {//注册，登录，注销，修改密码；返回Response对象，前端根据返回的json进行渲染
     private static final String DEFAULT_TOKEN_NAME = "X-Token";
+    private static final String DEFAULT_PERMISSION_NAME = "X-Permission";
 
     @Autowired
     private UserService userService;
@@ -38,20 +42,28 @@ public class UserController {//注册，登录，注销，修改密码；返回R
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @IgnoreSecurity
-    public Response login(@RequestBody CommonUser user){
+    public Response login(@RequestBody CommonUser user, HttpServletResponse httpServletResponse){
         String username=user.getUsername();
         String password=user.getPassword();
         LoginedResult lr=userService.login(username,password);//
         if (lr.isResult()){
+            Response response=new Response();
             //登录成功后，创建token用来作为用户登录后的凭证，封装user并返回前端
             String token=tokenManager.createToken(username);
             CommonUser commonUser=new CommonUser();
             commonUser.setToken(token);
             commonUser.setUsername(username);
+
+            Cookie tokenCookie=new Cookie(DEFAULT_TOKEN_NAME,token);
+            tokenCookie.setMaxAge(-1);//关闭浏览器即清除Cookie
+            httpServletResponse.addCookie(tokenCookie);//token写入cookie
             if (lr.getPermission()!=null&&!lr.getPermission().equals("")){
                 commonUser.setPermission(lr.getPermission());
+                Cookie permissionCookie=new Cookie(DEFAULT_PERMISSION_NAME,lr.getPermission());
+                permissionCookie.setMaxAge(-1);
+                httpServletResponse.addCookie(permissionCookie);//permission写入cookie
             }
-            return new Response().success(commonUser);//todo 注意：客户端需要把该token写入cookie中(如果有permission也要写入)，之后每次请求都将token随请求头一起发送到服务端
+            return response.success(commonUser);//todo 注意：之后客户端每次请求都将cookie中的token作为请求头，发送到服务端
         }else {
             //新建一个Response并注入相关登录失败的相关信息
             return new Response().failure("login_failure");
