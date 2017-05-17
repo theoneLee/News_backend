@@ -9,7 +9,7 @@
     <context:component-scan base-package="dao"/>
 
 
-    <!--hibernate数据源以及sessionFactory-->
+    <!--hibernate数据源以及sessionFactory，以供dao层使用-->
     <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/news_backend"/>
@@ -22,8 +22,9 @@
         <property name="mappingResources">
             <list>
                 <!--在这里添加实体映射配置-->
-                <value>bean/CommonUser.hbm.xml</value>
-
+                <value>bean/hbm/CommonUser.hbm.xml</value>
+                <value>bean/hbm/News.hbm.xml</value>
+                <value>bean/hbm/Comment.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">

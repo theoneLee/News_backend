@@ -4,12 +4,10 @@ import bean.Comment;
 import bean.News;
 import bean.Response;
 import bean.TempNews;
-import bean.user.CommonUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import security.IgnoreSecurity;
 import security.TokenManager;
-import security.web.WebContext;
 import service.NewsService;
 
 
@@ -18,7 +16,8 @@ import service.NewsService;
  */
 @RestController
 @RequestMapping("/news")
-public class NewsController {//todo：crud新闻以及对新闻的评论（根据header的token判断用户），返回Response对象，前端根据返回的json进行渲染
+public class NewsController {//todo 搜索（模糊查询）
+    private static final String DEFAULT_TOKEN_NAME="X-Token";//todo：crud新闻以及对新闻的评论（根据header的token判断用户），返回Response对象，前端根据返回的json进行渲染
     @Autowired
     private NewsService newsService;
 
@@ -28,9 +27,9 @@ public class NewsController {//todo：crud新闻以及对新闻的评论（根�
     @RequestMapping(method = RequestMethod.POST)
     //@IgnoreSecurity加上这个注解就会让该方法跳过检查
     public Response createNews(@RequestBody News news){
-        boolean result=newsService.createNews(news);
-        if (result){
-            return new Response().success();
+        TempNews tn=newsService.createNews(news);
+        if (tn.isResult()){
+            return new Response().success(tn.getNews());
         }else {
             return new Response().failure("createNews_failure");
         }
@@ -53,6 +52,7 @@ public class NewsController {//todo：crud新闻以及对新闻的评论（根�
         return new Response().failure("updateNews_failure");
     }
 
+    //todo 之后要做分页
     @RequestMapping(method = RequestMethod.GET)
     @IgnoreSecurity
     public Response getAllNews(){//返回所有news
@@ -93,12 +93,27 @@ public class NewsController {//todo：crud新闻以及对新闻的评论（根�
         }
     }
 
+    /**
+     *
+     * @param id 新闻id
+     * @param comment 对该新闻的评论
+     * @return "please login"即要求登录，"comment_failure"即表示评论失败，成功返回
+     */
     @RequestMapping(value = "/{id}",method = RequestMethod.POST)
-    @IgnoreSecurity
+    //@IgnoreSecurity
     public Response commentNews(@PathVariable("id")String id, @RequestBody Comment comment){
-        String token=WebContext.getRequest().getHeader(DEFAULT_TOKEN_NAME);
-        String username=tokenManager.getUserName(token);
-        newsService.comment(id,comment,username);//todo comment和news的关系
+//        String token=WebContext.getRequest().getHeader(DEFAULT_TOKEN_NAME);
+//        String username=tokenManager.getUserName(token);
+//        if (token==null||username==null||username.equals("")){
+//            //提示登录
+//           return new Response().failure("please login");
+//        }//把验证token部分交给SecurityAspect去做
+        boolean res=newsService.comment(id,comment);
+        if (res){
+            return new Response().success();
+        }else {
+            return new Response().failure("comment_failure");
+        }
     }
 
 }

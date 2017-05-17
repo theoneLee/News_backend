@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="bean">
+    <class name="bean.News">
+        <id name="id" type="integer">
+            <generator class="native"/>
+        </id>
+
+        <property name="title"/>
+        <property name="date"/>
+        <property name="newsManagerName"/>
+        <property name="content"/>
+
+        <!--单向一对多 级联操作 直接查询news时不加载comment队列-->
+        <set name="commentList" cascade="save-update,delete" lazy="true">
+            <key column="news_id"></key>
+            <one-to-many class="Comment"/>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

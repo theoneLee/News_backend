@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="bean">
+    <class name="bean.Comment">
+        <id name="id" type="integer">
+            <generator class="native"/>
+        </id>
+
+        <property name="username"/>
+        <property name="content"/>
+        <property name="date"/>
+
+    </class>
+
+</hibernate-mapping>
