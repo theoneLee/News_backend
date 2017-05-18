@@ -21,8 +21,8 @@ public class NewsController {//todo 搜索（模糊查询）
     @Autowired
     private NewsService newsService;
 
-    @Autowired
-    private TokenManager tokenManager;
+//    @Autowired
+//    private TokenManager tokenManager;
 
     @RequestMapping(method = RequestMethod.POST)
     //@IgnoreSecurity加上这个注解就会让该方法跳过检查
