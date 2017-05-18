@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="bean">
+    <class name="bean.Category">
+        <id name="id" type="integer">
+            <generator class="native"/>
+        </id>
+
+        <property name="categoryName"/>
+        <property name="flag"/>
+
+        <!--todo 单向一对多 级联操作 直接查询Category时不加载news队列,但是有关联查询的需求，注意设置-->
+        <!--当删除某个分类时，如果其下有对应的新闻，则会一并删除，注意要提示-->
+        <set name="newsList" cascade="save-update,delete" lazy="true">
+            <key column="category_id"></key>
+            <one-to-many class="News"/>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

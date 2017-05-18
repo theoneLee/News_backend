@@ -25,6 +25,7 @@
                 <value>bean/hbm/CommonUser.hbm.xml</value>
                 <value>bean/hbm/News.hbm.xml</value>
                 <value>bean/hbm/Comment.hbm.xml</value>
+                <value>bean/hbm/Category.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
