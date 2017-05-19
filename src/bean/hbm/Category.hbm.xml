@@ -13,7 +13,7 @@
 
         <!--todo 单向一对多 级联操作 直接查询Category时不加载news队列,但是有关联查询的需求，注意设置-->
         <!--当删除某个分类时，如果其下有对应的新闻，则会一并删除，注意要提示-->
-        <set name="newsList" cascade="save-update,delete" lazy="true">
+        <set name="newsList" cascade="save-update,delete" lazy="true" fetch="join">
             <key column="category_id"></key>
             <one-to-many class="News"/>
         </set>

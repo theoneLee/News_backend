@@ -13,6 +13,8 @@
         <property name="newsManagerName"/>
         <property name="content"/>
 
+        <many-to-one name="category" class="Category" column="category_id"/>
+
         <!--单向一对多 级联操作 直接查询news时不加载comment队列-->
         <set name="commentList" cascade="save-update,delete" lazy="true">
             <key column="news_id"></key>

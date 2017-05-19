@@ -14,6 +14,8 @@ public class News {
     private String newsManagerName;
     private String content;//使用富文本时，是利用上传图片的api，然后后端返回一个图片链接，前端拿到这个链接，直接嵌入文本的，而上传文本应该直接就是string化的html内容
 
+    private Category category;
+
     private List<Comment> commentList=new ArrayList<>();
 
     public News() {
@@ -24,6 +26,14 @@ public class News {
         this.date = date;
         this.newsManagerName = newsManagerName;
         this.content = content;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getContent() {
