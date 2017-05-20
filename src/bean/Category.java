@@ -1,7 +1,7 @@
 package bean;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 新闻分类
@@ -11,7 +11,7 @@ public class Category {
     private Integer id;
     private String categoryName;
     private boolean flag;//false表示允许删除和修改
-    private List<News> newsList=new ArrayList<>();
+    private Set<News> newsList=new HashSet<>();
 
     public Category() {
     }
@@ -41,11 +41,11 @@ public class Category {
         this.flag = flag;
     }
 
-    public List<News> getNewsList() {
+    public Set<News> getNewsList() {
         return newsList;
     }
 
-    public void setNewsList(List<News> newsList) {
+    public void setNewsList(Set<News> newsList) {
         this.newsList = newsList;
     }
 }

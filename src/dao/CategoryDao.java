@@ -60,6 +60,7 @@ public class CategoryDao {
         Transaction tx=session.beginTransaction();
         Query query=session.createQuery("from Category c where c.flag=false");
         List<Category> list=query.list();
+        System.out.println("dao:"+list);
         tx.commit();
         return list;
     }

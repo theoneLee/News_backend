@@ -1,8 +1,6 @@
 package bean;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Lee on 2017/5/3 0003.
@@ -16,7 +14,7 @@ public class News {
 
     private Category category;
 
-    private List<Comment> commentList=new ArrayList<>();
+    private Set<Comment> commentList=new HashSet<>();
 
     public News() {
     }
@@ -75,11 +73,11 @@ public class News {
         this.newsManagerName = newsManagerName;
     }
 
-    public List<Comment> getCommentList() {
+    public Set<Comment> getCommentList() {
         return commentList;
     }
 
-    public void setCommentList(List<Comment> commentList) {
+    public void setCommentList(Set<Comment> commentList) {
         this.commentList = commentList;
     }
 

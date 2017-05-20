@@ -73,7 +73,7 @@ public class NewsController {//todo 搜索（模糊查询）
         return new Response().failure("deleteNews_failure");
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     public Response deleteNewsById(@PathVariable("id")String id){
         boolean res=newsService.deleteNewsById(id);
         if (res){

@@ -32,9 +32,9 @@ public class CategoryService {
         if(parseInt>=0){
             List<News> list=categoryDao.getCategoryNews(categoryName,parseInt ,1);//查询pageSize条categoryName分类下的新闻
             List<HashMap<News, String>> res=new ArrayList<>();
-            HashMap<News, String> map=new HashMap<>();
             String link;
             for (News n:list){
+                HashMap<News, String> map=new HashMap<>();
                 link="/news/"+n.getId();//这个链接可以查询对应id的新闻
                 map.put(n,link);
                 res.add(map);
@@ -48,14 +48,15 @@ public class CategoryService {
     public List<HashMap<String, String>> getMoreCategoryList() {
         List<Category> list=categoryDao.getMoreCategory();//查询flag为false的所有分类
         List<HashMap<String, String>> res=new ArrayList<>();
-        HashMap<String, String> map=new HashMap<>();
         String link,categoryName;
         for (Category c:list){
+            HashMap<String, String> map=new HashMap<>();
             categoryName=c.getCategoryName();
             link="/category/"+categoryName+"/"+PAGESIZE;//这个链接可以查询该分类下的新闻（即得到一个新闻列表）
             map.put(categoryName,link);
             res.add(map);
         }
+        System.out.println("service:"+res);
         return res;
     }
 
@@ -63,12 +64,14 @@ public class CategoryService {
         int size=4;
         List<News> list=categoryDao.getIndexNews(size);//查询分类名为"hot"的4条新闻
         List<HashMap<News, String>> res=new ArrayList<>();
-        HashMap<News, String> map=new HashMap<>();
         String link;
         for (News n:list){
+            HashMap<News, String> map=new HashMap<>();
             link="/news/"+n.getId();//这个链接可以查询某个id的新闻
             map.put(n,link);
+
             res.add(map);
+
         }
         return res;
     }

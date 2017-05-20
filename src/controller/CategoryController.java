@@ -22,7 +22,7 @@ public class CategoryController {
     CategoryService categoryService;
 
     /**
-     *
+     * 已测试
      * @return 除了保留分类外的所有分类（包含categoryName和请求链接）
      * 封装为List<HashMap<categoryName,link>>
      */
@@ -37,7 +37,7 @@ public class CategoryController {
     }
 
     /**
-     *
+     * 已测试
      * @return 查询最新『热点』分类下的4条新闻，以及请求这些新闻的链接
      */
     @RequestMapping(value = "/hot",method = RequestMethod.GET)
@@ -51,6 +51,7 @@ public class CategoryController {
     }
 
     /**
+     * 已测试
      * pageSize 值为10.
      * @return 查询最新10条对应『类别』的新闻，以及请求这些新闻的链接,
      *todo 前端接受到这个数据后固定显示『查询更多』的按钮，没按一次页数加1，然后将接受到的json数据通过js函数显示，但如果json为null时就不再显示这个按钮，注意该按钮在刷新后值会重置
