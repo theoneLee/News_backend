@@ -43,7 +43,7 @@ public class CategoryController {
     @RequestMapping(value = "/hot",method = RequestMethod.GET)
     @IgnoreSecurity
     public Response getIndexNews(){
-        List<HashMap<News,String>> list=categoryService.getIndexNews();
+        List<HashMap<String,News>> list=categoryService.getIndexNews();
         if (list!=null&&list.size()>0){
             return new Response().success(list);
         }
@@ -51,7 +51,7 @@ public class CategoryController {
     }
 
     /**
-     * 已测试
+     *
      * pageSize 值为10.
      * @return 查询最新10条对应『类别』的新闻，以及请求这些新闻的链接,
      *todo 前端接受到这个数据后固定显示『查询更多』的按钮，没按一次页数加1，然后将接受到的json数据通过js函数显示，但如果json为null时就不再显示这个按钮，注意该按钮在刷新后值会重置
@@ -61,7 +61,7 @@ public class CategoryController {
     public Response getCategoryNews(
             @PathVariable("categoryName")String categoryName,
             @PathVariable("pageSize")String pageSize ){
-        List<HashMap<News,String>> list=categoryService.getCategoryNews(categoryName,pageSize);
+        List<HashMap<String,News>> list=categoryService.getCategoryNews(categoryName,pageSize);
         if (list!=null&&list.size()>0){
             return new Response().success(list);
         }

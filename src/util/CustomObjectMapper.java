@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,5 +40,9 @@ public class CustomObjectMapper extends ObjectMapper {
             DateFormat dateFormat = new SimpleDateFormat(dateFormatPattern);
             setDateFormat(dateFormat);
         }
+
+        //解决jackson在序列化关联对象时出现no session还会序列化的报错
+        Hibernate4Module hm = new Hibernate4Module();
+        registerModule(hm);
     }
 }
