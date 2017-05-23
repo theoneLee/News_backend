@@ -10,7 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 /**
- * 对 Jackson 的序列化行为进行定制，比如，排除值为空属性、进行缩进输出、将驼峰转为下划线、进行日期格式化
+ * 对 Jackson 的序列化行为进行定制，比如，排除值为空属性、进行缩进输出、将驼峰转为下划线、进行日期格式化 Hibernate4Module
  * Created by Lee on 2017/5/7 0007.
  */
 public class CustomObjectMapper extends ObjectMapper {
@@ -41,7 +41,9 @@ public class CustomObjectMapper extends ObjectMapper {
             setDateFormat(dateFormat);
         }
 
-        //解决jackson在序列化关联对象时出现no session还会序列化的报错
+        /**
+         * 解决jackson在序列化关联对象时出现no session还会序列化的报错
+         */
         Hibernate4Module hm = new Hibernate4Module();
         registerModule(hm);
     }

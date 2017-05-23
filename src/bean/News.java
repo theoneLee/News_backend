@@ -16,6 +16,17 @@ public class News {
 
     private Set<Comment> commentList=new HashSet<>();
 
+
+    private String link;//不需要持久化
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public News() {
     }
 

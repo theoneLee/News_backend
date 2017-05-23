@@ -29,7 +29,7 @@ public class CategoryController {
     @RequestMapping(value = "/more",method = RequestMethod.GET)
     @IgnoreSecurity
     public Response getMoreCategoryList(){
-        List<HashMap<String,String>> list=categoryService.getMoreCategoryList();
+        List list=categoryService.getMoreCategoryList();
         if (list!=null&&list.size()>0){
             return new Response().success(list);
         }
@@ -43,7 +43,7 @@ public class CategoryController {
     @RequestMapping(value = "/hot",method = RequestMethod.GET)
     @IgnoreSecurity
     public Response getIndexNews(){
-        List<HashMap<String,News>> list=categoryService.getIndexNews();
+        List<News> list=categoryService.getIndexNews();
         if (list!=null&&list.size()>0){
             return new Response().success(list);
         }
@@ -61,7 +61,7 @@ public class CategoryController {
     public Response getCategoryNews(
             @PathVariable("categoryName")String categoryName,
             @PathVariable("pageSize")String pageSize ){
-        List<HashMap<String,News>> list=categoryService.getCategoryNews(categoryName,pageSize);
+        List<News> list=categoryService.getCategoryNews(categoryName,pageSize);
         if (list!=null&&list.size()>0){
             return new Response().success(list);
         }
