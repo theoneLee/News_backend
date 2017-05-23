@@ -27,10 +27,10 @@ public class CategoryService {
      * @param pageSize
      * @return
      */
-    public List<News> getCategoryNews(String categoryName, String pageSize) {
+    public List<News> getCategoryNews(String categoryName, String pageSize,String pageNo) {
         int parseInt=Integer.parseInt(pageSize);
         if(parseInt>=0){
-            List<News> list=categoryDao.getCategoryNews(categoryName,parseInt ,1);//查询pageSize条categoryName分类下的新闻
+            List<News> list=categoryDao.getCategoryNews(categoryName,parseInt , Integer.parseInt(pageNo));//查询pageSize条categoryName分类下的新闻
             List<News> res=new ArrayList<>();
             String link;
             for (News n:list){

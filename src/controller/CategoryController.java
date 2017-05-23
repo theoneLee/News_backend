@@ -51,17 +51,18 @@ public class CategoryController {
     }
 
     /**
-     *
-     * pageSize 值为10.
+     * pageNo值就是要查找的页数
+     * pageSize 值恒为10.
      * @return 查询最新10条对应『类别』的新闻，以及请求这些新闻的链接,
      *todo 前端接受到这个数据后固定显示『查询更多』的按钮，没按一次页数加1，然后将接受到的json数据通过js函数显示，但如果json为null时就不再显示这个按钮，注意该按钮在刷新后值会重置
      */
-    @RequestMapping(value = "/{categoryName}/{pageSize}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{categoryName}/{pageNo}",method = RequestMethod.GET)
     @IgnoreSecurity
     public Response getCategoryNews(
             @PathVariable("categoryName")String categoryName,
-            @PathVariable("pageSize")String pageSize ){
-        List<News> list=categoryService.getCategoryNews(categoryName,pageSize);
+            //@PathVariable("pageSize")String pageSize ,
+            @PathVariable("pageNo")String pageNo ){
+        List<News> list=categoryService.getCategoryNews(categoryName,"10",pageNo);
         if (list!=null&&list.size()>0){
             return new Response().success(list);
         }
